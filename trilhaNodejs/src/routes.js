@@ -7,11 +7,11 @@ const router = Router();
 
 router.use(Middlewares.logRoutes);
 
-router.post('/account', ClientsController.create);
+router.post('/account', Middlewares.cpfFormat, ClientsController.create);
 
 router.get('/clients', ClientsController.getClients);
 
-router.use(Middlewares.verifyCpf);
+router.use(Middlewares.cpfExists);
 
 router.get('/statement', ClientsController.getStatement);
 
