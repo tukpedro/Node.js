@@ -1,7 +1,7 @@
 // Global function to get balance from a account
 function getBalance(statement) {
   const balance = statement.reduce((acc, operation) => {
-    if (operation.type === 'credit') {
+    if (operation.type === 'CREDIT') {
       return acc + operation.amount;
     } else {
       return acc - operation.amount;
@@ -10,20 +10,27 @@ function getBalance(statement) {
   return balance;
 }
 
+// Functions to export
 export default {
   // Deposit ammount
   deposit(req, res) {
     const { customer } = req;
     const { description, amount } = req.body;
 
+    const balance = getBalance(customer.statement);
+
     const operation = {
-      description,
+      type: 'CREDIT',
       amount,
+      description,
       created_at: new Date().toLocaleString('pt-BR', {
         timeZone: 'America/Sao_Paulo',
       }),
-      type: 'credit',
     };
+
+    operation.old_balance = balance;
+
+    operation.new_balance = balance + amount;
 
     customer.statement.push(operation);
 
@@ -36,6 +43,27 @@ export default {
     const { amount } = req.body;
 
     const balance = getBalance(customer.statement);
-    console.log(balance);
+
+    if (balance < amount) {
+      return res.status(400).json({
+        message: 'Insuficient funds!',
+      });
+    }
+
+    const operation = {
+      type: 'DEBIT',
+      amount,
+      created_at: new Date().toLocaleString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+      }),
+    };
+
+    operation.old_balance = balance;
+
+    operation.new_balance = balance - amount;
+
+    customer.statement.push(operation);
+
+    return res.status(201).json(customer)
   },
 };

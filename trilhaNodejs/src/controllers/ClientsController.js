@@ -6,6 +6,12 @@ export default {
   create(req, res) {
     const { cpf, name } = req.body;
 
+    if (cpf.length !== 11) {
+      return res.status(400).json({
+        error: 'Invalid CPF!'
+      })
+    }
+
     const cpfExists = customers.some(customer => customer.cpf === cpf);
 
     if (cpfExists) {
@@ -25,12 +31,24 @@ export default {
 
     customers.push(customer);
 
-    return res.status(201).json(customers);
+    return res.status(201).json(customer);
   },
 
   // List all clients and statements
   getClients(req, res) {
-    return res.json(customers);
+    const customersData = [];
+
+    customers.forEach(customer => {
+      const data = {
+        name: customer.name,
+        cpf: customer.cpf,
+        id: customer.id,
+      };
+
+      customersData.push(data);
+    });
+
+    return res.json(customersData);
   },
 
   // List all statements from a client
