@@ -50,4 +50,27 @@ export default {
     const { customer } = req;
     return res.json(customer.statement);
   },
+
+  getStatementByDate(req, res) {
+    const { customer } = req;
+    const { date } = req.headers;
+
+    const dateFormat = new Date(date + ' 00:00');
+
+    const toString = new Date(dateFormat).toDateString();
+
+    const statement = customer.statement;
+
+    const createdAt = statement.created_at;
+
+    console.log(createdAt);
+
+    // if (!statement) {
+    //   return res.status(400).json({
+    //     error: 'Not Found!',
+    //   });
+    // }
+
+    return res.status(200).json(statement);
+  },
 };

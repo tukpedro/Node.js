@@ -15,6 +15,8 @@ router.use(Middlewares.cpfExists);
 
 router.get('/statement', ClientsController.getStatement);
 
+router.get('/statement/date', ClientsController.getStatementByDate);
+
 router.post('/deposit', OperationsController.deposit);
 
 router.post('/withdraw', OperationsController.withdraw);
