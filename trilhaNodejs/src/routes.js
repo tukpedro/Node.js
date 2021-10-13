@@ -1,18 +1,22 @@
 import { Router } from 'express';
-import MainController from './controllers/MainController.js';
+import ClientsController from './controllers/ClientsController.js';
+import OperationsController from './controllers/OperationsController.js';
+import Middlewares from './controllers/Middlewares.js';
 
 const router = Router();
 
-router.use(MainController.logRoutes);
+router.use(Middlewares.logRoutes);
 
-router.post('/account', MainController.create);
+router.post('/account', ClientsController.create);
 
-router.get('/clients', MainController.getClients);
+router.get('/clients', ClientsController.getClients);
 
-router.use(MainController.verifyCpf);
+router.use(Middlewares.verifyCpf);
 
-router.get('/statement', MainController.getStatement);
+router.get('/statement', ClientsController.getStatement);
 
-router.post('/deposit', MainController.deposit);
+router.post('/deposit', OperationsController.deposit);
+
+router.post('/withdraw', OperationsController.withdraw);
 
 export default router;
