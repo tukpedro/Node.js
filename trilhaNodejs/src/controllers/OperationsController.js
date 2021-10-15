@@ -30,7 +30,7 @@ export default {
 
     operation.old_balance = balance;
 
-    operation.new_balance = balance + amount;
+    operation.current_balance = balance + amount;
 
     customer.statement.push(operation);
 
@@ -60,7 +60,7 @@ export default {
 
     operation.old_balance = balance;
 
-    operation.new_balance = balance - amount;
+    operation.current_balance = balance - amount;
 
     customer.statement.push(operation);
 

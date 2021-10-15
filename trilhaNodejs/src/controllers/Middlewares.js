@@ -48,4 +48,34 @@ export default {
 
     return next();
   },
+
+  validateDeposit(req, res, next) {
+    const { description, amount } = req.body;
+
+    while (typeof description !== 'string') {
+      return res.status(400).json({
+        error: 'Description must be string!',
+      });
+    }
+
+    while (typeof amount !== 'number') {
+      return res.status(400).json({
+        error: 'Amount must be number!',
+      });
+    }
+
+    return next();
+  },
+
+  validateWithdraw(req, res, next) {
+    const { amount } = req.body;
+
+    while (typeof amount !== 'number') {
+      return res.status(400).json({
+        error: 'Amount must be number!',
+      });
+    }
+
+    return next();
+  },
 };

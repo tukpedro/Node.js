@@ -55,15 +55,19 @@ export default {
     const { customer } = req;
     const { date } = req.headers;
 
-    const dateFormat = new Date(date + ' 00:00');
+    const dateFormat = new Date(date + ' 00:00').toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+    });
 
-    const toString = new Date(dateFormat).toDateString();
+    const statement = customer.statement.filter(
+      statement =>
+        statement.created_at ===
+        new Date(dateFormat).toLocaleString('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+        }),
+    );
 
-    const statement = customer.statement;
-
-    const createdAt = statement.created_at;
-
-    console.log(createdAt);
+    console.log(statement);
 
     // if (!statement) {
     //   return res.status(400).json({

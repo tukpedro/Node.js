@@ -17,8 +17,8 @@ router.get('/statement', ClientsController.getStatement);
 
 router.get('/statement/date', ClientsController.getStatementByDate);
 
-router.post('/deposit', OperationsController.deposit);
+router.post('/deposit', Middlewares.validateDeposit, OperationsController.deposit);
 
-router.post('/withdraw', OperationsController.withdraw);
+router.post('/withdraw', Middlewares.validateWithdraw, OperationsController.withdraw);
 
 export default router;
