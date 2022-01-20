@@ -1,0 +1,15 @@
+{
+  "name": "api-nodebr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "1": "node src/01-nodejs/index.js",
+    "2": "node src/02-events/index.js"
+    
+  },
+  "devDependencies": {
+    "axios": "^0.25.0"
+  }
+}

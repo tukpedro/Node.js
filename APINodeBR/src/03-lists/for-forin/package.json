@@ -1,0 +1,13 @@
+{
+  "name": "for-forin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "service": "node src/service.js",
+    "app": "node src/app.js"
+  },
+  "dependencies": {
+    "axios": "^0.25.0"
+  }
+}
