@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "1": "node src/01-nodejs/index.js",
-    "2": "node src/02-events/index.js"
+    "2": "node src/02-events/index.js",
+    "3": "node src/03-lists/for-forin/src/app.js"
     
   },
   "devDependencies": {

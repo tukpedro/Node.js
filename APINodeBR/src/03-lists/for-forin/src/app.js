@@ -36,6 +36,9 @@ async function main() {
 		Ships: ${ships};
 		`);
 
+    let c = null;
+    console.log(typeof c)
+
     return {
       Character: char,
       Films: films,
