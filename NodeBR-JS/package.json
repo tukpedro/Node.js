@@ -1,0 +1,19 @@
+{
+	"name": "poojs",
+	"version": "1.0.0",
+	"main": "index.js",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"1": "node src/getter-setter/demo01.js",
+		"2": "node src/objects/demo02.js",
+		"3": "node src/class/demo03.js",
+		"4": "node src/switch/demo04.js",
+		"5": "node src/modules/main.js",
+		"6": "node src/06-callbacks/demo06.js",
+		"7": "node src/07-promises/demo07.js",
+		"8": "node src/08-async-await/demo08.js",
+		"app": "node src/app.js"
+	},
+	"dependencies": {}
+}
