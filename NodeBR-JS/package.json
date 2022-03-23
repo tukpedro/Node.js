@@ -13,7 +13,7 @@
 		"6": "node src/06-callbacks/demo06.js",
 		"7": "node src/07-promises/demo07.js",
 		"8": "node src/08-async-await/demo08.js",
-		"app": "node src/app.js"
+		"9": "live-server src/09-projeto-final"
 	},
 	"dependencies": {}
 }
