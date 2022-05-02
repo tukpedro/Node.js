@@ -8,12 +8,12 @@ export class Game {
 			{ img: './files/batman.png', name: 'batman' },
 			{ img: './files/spiderman.png', name: 'spiderman' },
 			{ img: './files/cyclops.png', name: 'cyclops' },
-			{ img: './files/antman.png', name: 'antman' },
-			{ img: './files/deadpool.png', name: 'deadpool' },
-			{ img: './files/hellboy.png', name: 'hellboy' },
-			{ img: './files/thor.png', name: 'thor' },
-			{ img: './files/wolverine.png', name: 'wolverine' },
-			{ img: './files/thief.png', name: 'thief' },
+			// { img: './files/antman.png', name: 'antman' },
+			// { img: './files/deadpool.png', name: 'deadpool' },
+			// { img: './files/hellboy.png', name: 'hellboy' },
+			// { img: './files/thor.png', name: 'thor' },
+			// { img: './files/wolverine.png', name: 'wolverine' },
+			// { img: './files/thief.png', name: 'thief' },
 		];
 
 		this.defaultIcon = './files/default.png';
@@ -38,8 +38,10 @@ export class Game {
 			.sort(() => Math.random() - 0.5);
 
 		this.mainScreen.updateImg(herosCopy);
-
-		await this.utils.timeout(5000)
+		this.mainScreen.showLoading();
+		
+		await this.mainScreen.countDown();
+		this.mainScreen.showLoading(false);
 		this.hideHeros(herosCopy);
 	}
 

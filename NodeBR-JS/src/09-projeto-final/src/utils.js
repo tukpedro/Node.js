@@ -1,5 +1,5 @@
 export class Utils {
-    static timeout(time) {
-        return new Promise(resolve => setTimeout(resolve, time)); 
-    }
+	static timeout(time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
 }

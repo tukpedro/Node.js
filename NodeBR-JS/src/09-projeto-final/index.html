@@ -16,13 +16,19 @@
 		<script type="module" src="./game.js"></script>
 		<script type="module" src="./screen.js"></script>
 	</head>
-	<body>
+	<body class="container-fluid">
 		<br />
 		<div class="row container-fluid">
 			<button type="button" class="btn btn-success" id="play-button">Click to Start!</button>
 			<button type="button" class="btn btn-danger" id="showGame">Show Game</button>
 		</div>
 		<br />
+		<div id="loading" class="row container-fluid invisible">
+			<div id="counter"></div>
+			<div class="spinner-border text-warning" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
 		<div id="content" class="row"></div>
 		<div class="row container-fluid">
 			<div
