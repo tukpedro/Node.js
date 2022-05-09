@@ -6,6 +6,7 @@ const ID_MSG = 'msg';
 const INVISIBLE_CLASS = 'invisible';
 const ID_LOADING = 'loading';
 const ID_COUNTER = 'counter';
+const ID_SHOW_CARDS_BUTTON = 'show-cards';
 
 const MSGS = {
 	success: {
@@ -40,7 +41,7 @@ export class MainScreen {
 	}
 
 	static generateStringThroughImg(itens) {
-		return itens.map(MainScreen.getHtmlCode).join('');
+		return itens.map((item) => MainScreen.getHtmlCode(item)).join('');
 	}
 
 	static updateImg(itens) {
@@ -85,12 +86,18 @@ export class MainScreen {
 	}
 
 	static async countDown() {
-		const counter = document.getElementById(ID_COUNTER)
-		counter.innerHTML = '<strong>Starting in 3...</strong>';
-		await Utils.timeout(1000);
-		counter.innerHTML = '<strong>Starting in 2...</strong>';
-		await Utils.timeout(1000);
-		counter.innerHTML = '<strong>Starting in 1...</strong>';
-		await Utils.timeout(1000);
+		const counter = document.getElementById(ID_COUNTER);
+		let sec = 3;
+
+		while (sec >= 1) {
+			counter.innerHTML = `<strong>Starting in ${sec}...</strong>`;
+			await Utils.timeout(1000);
+			sec--;
+		}
+	}
+
+	static showCardsButtonConfig(onClick) {
+		const showCardsButton = document.getElementById(ID_SHOW_CARDS_BUTTON);
+		showCardsButton.onclick = onClick
 	}
 }

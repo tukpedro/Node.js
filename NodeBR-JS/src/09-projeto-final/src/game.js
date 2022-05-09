@@ -27,6 +27,7 @@ export class Game {
 		this.mainScreen.updateImg(this.initialHeros);
 		this.mainScreen.playButtonConfig(this.play.bind(this));
 		this.mainScreen.checkCardsButtonConfig(this.checkSelection.bind(this));
+		this.mainScreen.showCardsButtonConfig(this.showCards.bind(this));
 	}
 
 	async randomize() {
@@ -39,7 +40,7 @@ export class Game {
 
 		this.mainScreen.updateImg(herosCopy);
 		this.mainScreen.showLoading();
-		
+
 		await this.mainScreen.countDown();
 		this.mainScreen.showLoading(false);
 		this.hideHeros(herosCopy);
@@ -54,13 +55,22 @@ export class Game {
 
 		this.mainScreen.updateImg(newHiddenHeros);
 
-		this.hiddenHeros = hiddenHeros;
+		this.hiddenHeros = newHiddenHeros;
 	}
 
 	showHeros(herosName) {
 		const { img } = this.initialHeros.find((hero) => hero.name === herosName);
 
 		this.mainScreen.showHeros(herosName, img);
+	}
+
+	showCards() {
+		const hiddenHeros = this.hiddenHeros;
+		hiddenHeros.forEach((hero) => {
+			const { img } = this.initialHeros.find((item) => item.name === hero.name);
+			hero.img = img;
+		});
+		this.mainScreen.updateImg(hiddenHeros);
 	}
 
 	checkSelection(id, name) {
