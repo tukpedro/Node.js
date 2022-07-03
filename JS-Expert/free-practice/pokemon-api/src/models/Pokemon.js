@@ -17,7 +17,12 @@ export class Pokemon {
 
 	filterSprites(sprites) {
 		const { front_default, back_default, front_shiny, back_shiny } = sprites;
-		return { front_default, back_default, front_shiny, back_shiny };
+		return {
+			front_default: front_default ? front_default : undefined,
+			back_default: back_default ? back_default : undefined,
+			front_shiny: front_shiny ? front_shiny : undefined,
+			back_shiny: back_shiny ? back_shiny : undefined,
+		};
 	}
 
 	filterMoves(moves) {
@@ -70,13 +75,16 @@ export class Pokemon {
 				chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats === null
 					? undefined
 					: chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats,
-			time_of_day: chain.evolves_to[0]?.evolution_details[0]?.time_of_day === '' ? undefined : this.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
+			time_of_day:
+				chain.evolves_to[0]?.evolution_details[0]?.time_of_day === ''
+					? undefined
+					: this.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
 			trade_species:
 				chain.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.trade_species,
 			item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
 		};
 
-		const b = chain.evolves_to[0].evolves_to.length <= 1 ? true : false;
+		const b = chain.evolves_to.length <= 1 ? true : false;
 		if (b) {
 			obj[`${chain.evolves_to[0]?.evolves_to[0]?.evolves_to ? 'form_2' : 'final_form'}`] = {
 				name: this.formatName(chain.evolves_to[0]?.species?.name),
@@ -149,14 +157,87 @@ export class Pokemon {
 
 		const c = chain.evolves_to[0]?.evolves_to[0]?.evolves_to ? true : false;
 		if (c) {
-			obj[`final_form`] = {
-				name: this.formatName(chain.evolves_to[0]?.evolves_to[0]?.species?.name),
-				evolution_trigger: chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger,
-				evolution_level:
-					chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level === null
-						? undefined
-						: chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level,
-			};
+			if (chain.evolves_to[0]?.evolves_to.length > 1) {
+				for (let i in chain.evolves_to[0]?.evolves_to) {
+					obj[`final_form_${parseInt(i) + 1}`] = {
+						name: this.formatName(chain.evolves_to[0]?.evolves_to[i]?.species?.name),
+						evolution_trigger: this.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.trigger?.name),
+						evolution_level:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_level === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_level,
+						gender:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.gender === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.gender,
+						held_item:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.held_item === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.held_item,
+						known_move:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.known_move === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.known_move,
+						known_move_type:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.known_move_type === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.known_move_type.name,
+						location:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.location === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.location.name,
+						min_affection:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_affection === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_affection,
+						min_beauty:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_beauty === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_beauty,
+						min_happiness:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_happiness === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_happiness,
+						needs_overworld_rain:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain === false
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain,
+						party_species:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.party_species === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.party_species,
+						party_type:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.party_type === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.party_type,
+						relative_physical_stats:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.relative_physical_stats === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.relative_physical_stats,
+						time_of_day:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.time_of_day === ''
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.time_of_day,
+						trade_species:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.trade_species === null
+								? undefined
+								: chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.trade_species,
+						item:
+							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.item === null
+								? undefined
+								: this.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.item.name),
+					};
+				}
+			} else {
+				obj[`final_form`] = {
+					name: this.formatName(chain.evolves_to[0]?.evolves_to[0]?.species?.name),
+					evolution_trigger: chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger,
+					evolution_level:
+						chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level === null
+							? undefined
+							: chain.evolves_to[0]?.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level,
+				};
+			}
 		}
 
 		return obj;
@@ -164,15 +245,59 @@ export class Pokemon {
 
 	getEvolutionVariations(chain) {
 		const obj = {};
+
+		obj[`form_1`] = {
+			name: this.formatName(chain.species?.name),
+			evolution_trigger: this.formatName(chain.evolves_to[0]?.evolution_details[0]?.trigger?.name),
+			evolution_level: chain.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_level,
+			// gender: chain.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : this.filterGender(chain.evolves_to[0]?.evolution_details[0]?.gender),
+			held_item:
+				chain.evolves_to[0]?.evolution_details[0]?.held_item === null
+					? undefined
+					: this.formatName(chain.evolves_to[0]?.evolution_details[0]?.held_item.name),
+			known_move: chain.evolves_to[0]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.known_move,
+			known_move_type:
+				chain.evolves_to[0]?.evolution_details[0]?.known_move_type === null
+					? undefined
+					: chain.evolves_to[0]?.evolution_details[0]?.known_move_type.name,
+			location: chain.evolves_to[0]?.evolution_details[0]?.location === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.location.name,
+			min_affection:
+				chain.evolves_to[0]?.evolution_details[0]?.min_affection === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_affection,
+			min_beauty: chain.evolves_to[0]?.evolution_details[0]?.min_beauty === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_beauty,
+			min_happiness:
+				chain.evolves_to[0]?.evolution_details[0]?.min_happiness === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_happiness,
+			needs_overworld_rain:
+				chain.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain === false
+					? undefined
+					: chain.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain,
+			party_species:
+				chain.evolves_to[0]?.evolution_details[0]?.party_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.party_species,
+			party_type: chain.evolves_to[0]?.evolution_details[0]?.party_type === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.party_type,
+			relative_physical_stats:
+				chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats === null
+					? undefined
+					: chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats,
+			time_of_day:
+				chain.evolves_to[0]?.evolution_details[0]?.time_of_day === ''
+					? undefined
+					: this.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
+			trade_species:
+				chain.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.trade_species,
+			// item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
+		};
+
 		const a = chain.evolves_to.length > 1 ? true : false;
 		if (a) {
 			for (let i in chain.evolves_to) {
-				obj[`form_${parseInt(i) + 1}`] = {
+				obj[`final_form_${parseInt(i) + 1}`] = {
 					name: this.formatName(chain.evolves_to[i]?.species?.name),
 					evolution_trigger: this.formatName(chain.evolves_to[i]?.evolution_details[0]?.trigger?.name),
-					evolution_level:
-						chain.evolves_to[i]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.min_level,
-					gender: chain.evolves_to[i]?.evolution_details[0]?.gender === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.gender,
+					// evolution_level:
+					// 	chain.evolves_to[i]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.min_level,
+					gender:
+						chain.evolves_to[i]?.evolution_details[0]?.gender === null
+							? undefined
+							: this.filterGender(chain.evolves_to[i]?.evolution_details[0]?.gender),
 					held_item: chain.evolves_to[i]?.evolution_details[0]?.held_item === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.held_item,
 					known_move:
 						chain.evolves_to[i]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.known_move,
@@ -181,7 +306,9 @@ export class Pokemon {
 							? undefined
 							: this.formatName(chain.evolves_to[i]?.evolution_details[0]?.known_move_type.name),
 					location:
-						chain.evolves_to[i]?.evolution_details[0]?.location === null ? undefined : this.formatName(chain.evolves_to[i]?.evolution_details[0]?.location.name),
+						chain.evolves_to[i]?.evolution_details[0]?.location === null
+							? undefined
+							: this.formatName(chain.evolves_to[i]?.evolution_details[0]?.location.name),
 					min_affection:
 						chain.evolves_to[i]?.evolution_details[0]?.min_affection === null
 							? undefined
@@ -207,7 +334,9 @@ export class Pokemon {
 							? undefined
 							: chain.evolves_to[i]?.evolution_details[0]?.relative_physical_stats,
 					time_of_day:
-						chain.evolves_to[i]?.evolution_details[0]?.time_of_day === '' ? undefined : this.formatName(chain.evolves_to[i]?.evolution_details[0]?.time_of_day),
+						chain.evolves_to[i]?.evolution_details[0]?.time_of_day === ''
+							? undefined
+							: this.formatName(chain.evolves_to[i]?.evolution_details[0]?.time_of_day),
 					trade_species:
 						chain.evolves_to[i]?.evolution_details[0]?.trade_species === null
 							? undefined
@@ -220,5 +349,9 @@ export class Pokemon {
 			}
 		}
 		return obj;
+	}
+
+	filterGender(gender) {
+		return gender === 1 ? 'Female' : 'Male';
 	}
 }
