@@ -4,7 +4,7 @@ import { Pokemon } from '../models/Pokemon.js';
 export class Controller {
 	static async get(req, res) {
 		const data = Controller.dataProvider(req)
-		let objects = {};
+		let arr = [];
 		try {
 			let { results } = await Controller.fetchUrl(data.pokemonsUrl);
 			
@@ -12,15 +12,15 @@ export class Controller {
 			if (!found) return res.status(404).json({ error: `Could not find pokemon ${data.pokemon}` });
 			
 			let pokemonData = await Controller.fetchUrl(found.url);
-			objects.pokemon = pokemonData;
+			arr.push(pokemonData);
 			
-			pokemonData = await Controller.fetchUrl(objects.pokemon.species.url);
-			objects.species = pokemonData;
-
-			pokemonData = await Controller.fetchUrl(objects.species.evolution_chain.url);
-			objects.evolution = pokemonData;
+			pokemonData = await Controller.fetchUrl(arr[0].species.url);
+			arr.push(pokemonData);
 			
-			return res.status(200).send(new Pokemon(objects.pokemon, objects.species));
+			pokemonData = await Controller.fetchUrl(arr[1].evolution_chain.url);
+			arr.push(pokemonData);
+			
+			return res.status(200).send(new Pokemon(arr[0], arr[1], arr[2]));
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -30,7 +30,7 @@ export class Controller {
 	static dataProvider(req) {
 		const { pokeApi } = new Constants();
 		let pokemon = req.params.pokemon;
-		pokemon = isNaN(parseInt(pokemon, 10)) ? pokemon : parseInt(pokemon, 10);
+		pokemon = isNaN(parseInt(pokemon, 10)) ? pokemon.toLowerCase() : parseInt(pokemon, 10);
 		let pokemonsUrl = pokeApi.url + pokeApi.pokemons + pokeApi.offset;
 		let pokemonSpecies = pokeApi.url + pokeApi.pokemonSpecies + pokeApi.offset;
 		let evolutionUrl = pokeApi.url + pokeApi.evolutionChain + pokeApi.offset;
