@@ -1,6 +1,6 @@
-import { PokemonResponseDto } from '../dto/pokemon.response.dto.js';
 import { ServiceUtils } from '../utils/service.utils.js';
 import { ErrorMessages } from '../utils/error.messages.js';
+import { PokemonResponseDto } from '../dto/pokemon.response.dto.js';
 
 export class Service {
 	static async service(req) {
