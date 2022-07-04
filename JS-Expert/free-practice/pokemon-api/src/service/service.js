@@ -1,4 +1,4 @@
-import { Pokemon } from '../models/Pokemon.js';
+import { Pokemon } from '../dto/pokemon.response.dto.js';
 import { ServiceUtils } from '../utils/service.utils.js';
 import { ErrorMessages } from '../utils/error.messages.js';
 
