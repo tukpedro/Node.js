@@ -290,16 +290,14 @@ export class PokemonUtils {
 
 	static buildFirstObject(chain) {
 		const obj = {};
-
-		obj[`first_form`] = {
-			name: PokemonUtils.formatName(chain.species?.name),
-			evolution_trigger: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.trigger?.name),
+		let prop = chain.evolves_to.length > 0 ? 'first_form' : 'unique_form';
+		
+		obj[prop] = {
+			name: this.formatName(chain.species?.name),
+			evolution_trigger: chain.evolves_to[0]?.evolution_details[0]?.trigger?.name,
 			evolution_level: chain.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_level,
 			// gender: chain.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : PokemonUtils.filterGender(chain.evolves_to[0]?.evolution_details[0]?.gender),
-			held_item:
-				chain.evolves_to[0]?.evolution_details[0]?.held_item === null
-					? undefined
-					: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.held_item.name),
+			held_item: chain.evolves_to[0]?.evolution_details[0]?.held_item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.held_item.name,
 			known_move: chain.evolves_to[0]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.known_move,
 			known_move_type:
 				chain.evolves_to[0]?.evolution_details[0]?.known_move_type === null
@@ -322,16 +320,13 @@ export class PokemonUtils {
 				chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats === null
 					? undefined
 					: chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats,
-			time_of_day:
-				chain.evolves_to[0]?.evolution_details[0]?.time_of_day === ''
-					? undefined
-					: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
+			time_of_day: chain.evolves_to[0]?.evolution_details[0]?.time_of_day === '' ? undefined : chain.evolves_to[0]?.evolution_details[0]?.time_of_day,
 			trade_species:
 				chain.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.trade_species,
 			item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
 		};
 
-		obj.first_form.name === 'Eevee' ? delete obj.first_form.item : null;
+		obj.first_form?.name === 'Eevee' ? delete obj.first_form?.item : null;
 
 		return obj;
 	}
