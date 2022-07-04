@@ -1,7 +1,10 @@
 import { Constants } from '../configs/constants.js';
 import { Pokemon } from '../models/Pokemon.js';
+import { ErrorMessages } from '../utils/error.messages.js';
 
 export class Service {
+	static success = false;
+
 	static async service(req) {
 		const data = Service.dataProvider(req);
 		let arr = [];
@@ -9,7 +12,7 @@ export class Service {
 			let { results } = await Service.fetchUrl(data.pokemonsUrl);
 
 			let found = results.find((e) => e.name === data.pokemon);
-			if (!found) throw (`Could not find pokemon ${data.pokemon}`);
+			if (!found) throw (ErrorMessages.pokemonNotFound);
 
 			let pokemonData = await Service.fetchUrl(found.url);
 			arr.push(pokemonData);

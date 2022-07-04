@@ -1,4 +1,28 @@
 export class PokemonUtils {
+	static nameFilter(name) {
+		return PokemonUtils.formatName(name);
+	}
+
+	static habitatFilter(habitat) {
+		return habitat ? PokemonUtils.formatName(habitat.name) : undefined;
+	}
+
+	static typesFilter(types) {
+		return PokemonUtils.filterTypes(types);
+	}
+
+	static spritesFilter(sprites) {
+		return PokemonUtils.filterSprites(sprites);
+	}
+
+	static evolutionChainFilter(chain) {
+		return chain.evolves_to.length === 1 ? PokemonUtils.getEvolutionsInfo(chain) : PokemonUtils.getEvolutionVariations(chain);
+	}
+
+	static movesFilter(moves) {
+		return PokemonUtils.filterMoves(moves);
+	}
+	
 	static filterGender(gender) {
 		return gender === 1 ? 'Female' : 'Male';
 	}
@@ -40,7 +64,7 @@ export class PokemonUtils {
 
 		const b = chain.evolves_to.length <= 1 ? true : false;
 		if (b) {
-			obj[`${chain.evolves_to[0]?.evolves_to[0]?.evolves_to ? 'form_2' : 'final_form'}`] = {
+			obj[`${chain.evolves_to[0]?.evolves_to[0]?.evolves_to ? 'second_form' : 'final_form'}`] = {
 				name: PokemonUtils.formatName(chain.evolves_to[0]?.species?.name),
 				evolution_trigger: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger
 					? PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name)
@@ -254,9 +278,11 @@ export class PokemonUtils {
 						chain.evolves_to[i]?.evolution_details[0]?.item === null
 							? undefined
 							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.item.name),
-                };
-                
-                obj[`final_form_${parseInt(i) + 1}`].name === 'Hitmonlee' || 'Hitmonchan' || 'Hitmontop' ? delete obj[`final_form_${parseInt(i) + 1}`].evolution_level : undefined;
+				};
+
+				obj[`final_form_${parseInt(i) + 1}`].name === 'Hitmonlee' || 'Hitmonchan' || 'Hitmontop'
+					? delete obj[`final_form_${parseInt(i) + 1}`].evolution_level
+					: null;
 			}
 		}
 		return obj;
@@ -265,7 +291,7 @@ export class PokemonUtils {
 	static buildFirstObject(chain) {
 		const obj = {};
 
-		obj[`form_1`] = {
+		obj[`first_form`] = {
 			name: PokemonUtils.formatName(chain.species?.name),
 			evolution_trigger: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.trigger?.name),
 			evolution_level: chain.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_level,
@@ -305,8 +331,8 @@ export class PokemonUtils {
 			item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
 		};
 
-		obj.form_1.name === 'Eevee' ? delete obj.form_1.item : undefined;
+		obj.first_form.name === 'Eevee' ? delete obj.first_form.item : null;
 
 		return obj;
-    }
+	}
 }

@@ -1,3 +1,7 @@
+/**
+ * Work in progress. API does not connect to MongoDB yet
+ */
+
 import { clusterUri } from './constants.js';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
