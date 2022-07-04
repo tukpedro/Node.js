@@ -1,3 +1,3 @@
 export class ErrorMessages {
-    static pokemonNotFound = 'Could not find pokemon';
+    static pokemonNotFound = 'Cannot not find pokemon';
 }

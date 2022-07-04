@@ -5,7 +5,8 @@ export class Controller {
 		try {
 			return res.status(200).send(await Service.service(req));
 		} catch (error) {
-			if (error === ErrorMessages.pokemonNotFound) return res.status(404).send({ error: 'Bad Request', message: error });
+			const flag = error === ErrorMessages.pokemonNotFound;
+			if (flag) return res.status(404).send({ error: 'Bad Request', message: error });
 			return res.status(500).send({ error: 'Service error', message: error.message });
 		}
 	}
