@@ -1,6 +1,6 @@
 import { Pokemon } from '../models/Pokemon.js';
-import { ErrorMessages } from '../utils/error.messages.js';
 import { ServiceUtils } from '../utils/service.utils.js';
+import { ErrorMessages } from '../utils/error.messages.js';
 
 export class Service {
 	static async service(req) {
