@@ -1,4 +1,4 @@
-export class Utils {
+export class PokemonUtils {
 	static filterGender(gender) {
 		return gender === 1 ? 'Female' : 'Male';
 	}
@@ -22,7 +22,7 @@ export class Utils {
 	static filterMoves(moves) {
 		moves.forEach((move) => delete move.version_group_details);
 		for (let i in moves) {
-			moves[i] = Utils.formatName(moves[i].move.name);
+			moves[i] = PokemonUtils.formatName(moves[i].move.name);
 		}
 		return moves;
 	}
@@ -30,20 +30,20 @@ export class Utils {
 	static filterTypes(types) {
 		types.forEach((type) => delete type.slot);
 		for (let i in types) {
-			types[i] = Utils.formatName(types[i].type.name);
+			types[i] = PokemonUtils.formatName(types[i].type.name);
 		}
 		return types;
 	}
 
 	static getEvolutionsInfo(chain) {
-		const obj = Utils.buildFirstObject(chain);
+		const obj = PokemonUtils.buildFirstObject(chain);
 
 		const b = chain.evolves_to.length <= 1 ? true : false;
 		if (b) {
 			obj[`${chain.evolves_to[0]?.evolves_to[0]?.evolves_to ? 'form_2' : 'final_form'}`] = {
-				name: Utils.formatName(chain.evolves_to[0]?.species?.name),
+				name: PokemonUtils.formatName(chain.evolves_to[0]?.species?.name),
 				evolution_trigger: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger
-					? Utils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name)
+					? PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trigger.name)
 					: undefined,
 				evolution_level:
 					chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_level === null
@@ -54,7 +54,7 @@ export class Utils {
 						? undefined
 						: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.gender,
 				held_item: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.held_item
-					? Utils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.held_item.name)
+					? PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.held_item.name)
 					: undefined,
 				known_move:
 					chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.known_move === null
@@ -65,7 +65,7 @@ export class Utils {
 						? undefined
 						: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.known_move_type.name,
 				location: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.location
-					? Utils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.location.name)
+					? PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.location.name)
 					: undefined,
 				min_affection:
 					chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.min_affection === null
@@ -104,7 +104,7 @@ export class Utils {
 						? undefined
 						: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.trade_species,
 				item: chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.item
-					? Utils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.item.name)
+					? PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.evolution_details[0]?.item.name)
 					: undefined,
 			};
 		}
@@ -114,8 +114,8 @@ export class Utils {
 			if (chain.evolves_to[0]?.evolves_to.length > 1) {
 				for (let i in chain.evolves_to[0]?.evolves_to) {
 					obj[`final_form_${parseInt(i) + 1}`] = {
-						name: Utils.formatName(chain.evolves_to[0]?.evolves_to[i]?.species?.name),
-						evolution_trigger: Utils.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.trigger?.name),
+						name: PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[i]?.species?.name),
+						evolution_trigger: PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.trigger?.name),
 						evolution_level:
 							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.min_level === null
 								? undefined
@@ -179,12 +179,12 @@ export class Utils {
 						item:
 							chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.item === null
 								? undefined
-								: Utils.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.item.name),
+								: PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[i]?.evolution_details[0]?.item.name),
 					};
 				}
 			} else {
 				obj[`final_form`] = {
-					name: Utils.formatName(chain.evolves_to[0]?.evolves_to[0]?.species?.name),
+					name: PokemonUtils.formatName(chain.evolves_to[0]?.evolves_to[0]?.species?.name),
 				};
 			}
 		}
@@ -193,31 +193,31 @@ export class Utils {
 	}
 
 	static getEvolutionVariations(chain) {
-		const obj = Utils.buildFirstObject(chain);
+		const obj = PokemonUtils.buildFirstObject(chain);
 
 		const a = chain.evolves_to.length > 1 ? true : false;
 		if (a) {
 			for (let i in chain.evolves_to) {
 				obj[`final_form_${parseInt(i) + 1}`] = {
-					name: Utils.formatName(chain.evolves_to[i]?.species?.name),
-					evolution_trigger: Utils.formatName(chain.evolves_to[i]?.evolution_details[0]?.trigger?.name),
+					name: PokemonUtils.formatName(chain.evolves_to[i]?.species?.name),
+					evolution_trigger: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.trigger?.name),
 					evolution_level:
 						chain.evolves_to[i]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.min_level,
 					gender:
 						chain.evolves_to[i]?.evolution_details[0]?.gender === null
 							? undefined
-							: Utils.filterGender(chain.evolves_to[i]?.evolution_details[0]?.gender),
+							: PokemonUtils.filterGender(chain.evolves_to[i]?.evolution_details[0]?.gender),
 					held_item: chain.evolves_to[i]?.evolution_details[0]?.held_item === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.held_item,
 					known_move:
 						chain.evolves_to[i]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.known_move,
 					known_move_type:
 						chain.evolves_to[i]?.evolution_details[0]?.known_move_type === null
 							? undefined
-							: Utils.formatName(chain.evolves_to[i]?.evolution_details[0]?.known_move_type.name),
+							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.known_move_type.name),
 					location:
 						chain.evolves_to[i]?.evolution_details[0]?.location === null
 							? undefined
-							: Utils.formatName(chain.evolves_to[i]?.evolution_details[0]?.location.name),
+							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.location.name),
 					min_affection:
 						chain.evolves_to[i]?.evolution_details[0]?.min_affection === null
 							? undefined
@@ -245,7 +245,7 @@ export class Utils {
 					time_of_day:
 						chain.evolves_to[i]?.evolution_details[0]?.time_of_day === ''
 							? undefined
-							: Utils.formatName(chain.evolves_to[i]?.evolution_details[0]?.time_of_day),
+							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.time_of_day),
 					trade_species:
 						chain.evolves_to[i]?.evolution_details[0]?.trade_species === null
 							? undefined
@@ -253,7 +253,7 @@ export class Utils {
 					item:
 						chain.evolves_to[i]?.evolution_details[0]?.item === null
 							? undefined
-							: Utils.formatName(chain.evolves_to[i]?.evolution_details[0]?.item.name),
+							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.item.name),
                 };
                 
                 obj[`final_form_${parseInt(i) + 1}`].name === 'Hitmonlee' || 'Hitmonchan' || 'Hitmontop' ? delete obj[`final_form_${parseInt(i) + 1}`].evolution_level : undefined;
@@ -266,14 +266,14 @@ export class Utils {
 		const obj = {};
 
 		obj[`form_1`] = {
-			name: Utils.formatName(chain.species?.name),
-			evolution_trigger: Utils.formatName(chain.evolves_to[0]?.evolution_details[0]?.trigger?.name),
+			name: PokemonUtils.formatName(chain.species?.name),
+			evolution_trigger: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.trigger?.name),
 			evolution_level: chain.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_level,
-			// gender: chain.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : Utils.filterGender(chain.evolves_to[0]?.evolution_details[0]?.gender),
+			// gender: chain.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : PokemonUtils.filterGender(chain.evolves_to[0]?.evolution_details[0]?.gender),
 			held_item:
 				chain.evolves_to[0]?.evolution_details[0]?.held_item === null
 					? undefined
-					: Utils.formatName(chain.evolves_to[0]?.evolution_details[0]?.held_item.name),
+					: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.held_item.name),
 			known_move: chain.evolves_to[0]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.known_move,
 			known_move_type:
 				chain.evolves_to[0]?.evolution_details[0]?.known_move_type === null
@@ -299,7 +299,7 @@ export class Utils {
 			time_of_day:
 				chain.evolves_to[0]?.evolution_details[0]?.time_of_day === ''
 					? undefined
-					: Utils.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
+					: PokemonUtils.formatName(chain.evolves_to[0]?.evolution_details[0]?.time_of_day),
 			trade_species:
 				chain.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.trade_species,
 			item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
@@ -308,5 +308,5 @@ export class Utils {
 		obj.form_1.name === 'Eevee' ? delete obj.form_1.item : undefined;
 
 		return obj;
-	}
+    }
 }
