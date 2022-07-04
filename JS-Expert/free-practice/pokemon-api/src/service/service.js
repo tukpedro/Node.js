@@ -7,15 +7,15 @@ export class Service {
 		const data = ServiceUtils.dataProvider(req);
 		let arr = [];
 		try {
-			let { results } = await ServiceUtils.fetchUrl(data.pokemonsUrl);
 			let found;
+			let { results } = await ServiceUtils.fetchUrl(data.pokemonsUrl);
 
 			if (isNaN(data.pokemon)) {
 				found = results.find((e) => e.name === data.pokemon);
 				if (!found) throw (ErrorMessages.pokemonNotFound);
 			} else {
 				found = results.at(data.pokemon - 1);
-				if (!found) throw ErrorMessages.pokemonNotFound;
+				if (!found) throw (ErrorMessages.pokemonNotFound);
 			}
 
 			let pokemonData = await ServiceUtils.fetchUrl(found.url);
