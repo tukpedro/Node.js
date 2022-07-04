@@ -1,5 +1,5 @@
 import { PokemonUtils } from '../utils/pokemon.utils.js';
-export class Pokemon {
+export class PokemonResponseDto {
 	constructor({ id, moves, name, sprites, types }, { habitat }, { chain }) {
 		this.name = PokemonUtils.nameFilter(name);
 		this.id = id;

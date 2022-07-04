@@ -1,4 +1,4 @@
-import { Pokemon } from '../dto/pokemon.response.dto.js';
+import { PokemonResponseDto } from '../dto/pokemon.response.dto.js';
 import { ServiceUtils } from '../utils/service.utils.js';
 import { ErrorMessages } from '../utils/error.messages.js';
 
@@ -27,7 +27,7 @@ export class Service {
 			pokemonData = await ServiceUtils.fetchUrl(arr[1].evolution_chain.url);
 			arr.push(pokemonData);
 
-			return new Pokemon(arr[0], arr[1], arr[2]);
+			return new PokemonResponseDto(arr[0], arr[1], arr[2]);
 		} catch (error) {
 			throw (error);
 		}
