@@ -3,6 +3,6 @@ import { Controller } from '../controller/controller.js';
 
 const router = Router();
 
-router.get('/:pokemon', Controller.get);
+router.get('/:pokemon', Controller.getPokemon);
 
 export default router;

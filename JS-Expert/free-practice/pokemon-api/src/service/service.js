@@ -3,8 +3,6 @@ import { Pokemon } from '../models/Pokemon.js';
 import { ErrorMessages } from '../utils/error.messages.js';
 
 export class Service {
-	static success = false;
-
 	static async service(req) {
 		const data = Service.dataProvider(req);
 		let arr = [];
@@ -30,7 +28,7 @@ export class Service {
 	}
 
 	static dataProvider(req) {
-		const { pokeApi } = new Constants();
+		const { pokeApi } = Constants;
 		let pokemon = req.params.pokemon;
 		pokemon = isNaN(parseInt(pokemon, 10)) ? pokemon.toLowerCase() : parseInt(pokemon, 10);
 		let pokemonsUrl = pokeApi.url + pokeApi.pokemons + pokeApi.offset;
