@@ -1,6 +1,6 @@
 import express, { json } from 'express';
-import { Constants } from './configs/constants.js';
 import router from './routes/routes.js';
+import { Constants } from './configs/constants.js';
 
 const app = express();
 
