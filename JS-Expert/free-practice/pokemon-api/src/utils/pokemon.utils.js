@@ -8,19 +8,23 @@ export class PokemonUtils {
 	}
 
 	static typesFilter(types) {
-		return PokemonUtils.filterTypes(types);
+		const result = PokemonUtils.filterTypes(types);
+		return result.length > 0 ? result : undefined;
 	}
 
 	static spritesFilter(sprites) {
-		return PokemonUtils.filterSprites(sprites);
+		const result = PokemonUtils.filterSprites(sprites);
+		return Object.keys(result).length > 0 ? result : undefined;
 	}
 
 	static evolutionChainFilter(chain) {
-		return chain?.evolves_to?.length === 1 ? PokemonUtils.getEvolutionsInfo(chain) : PokemonUtils.getEvolutionVariations(chain);
+		const result = chain?.evolves_to?.length === 1 ? PokemonUtils.getEvolutionsInfo(chain) : PokemonUtils.getEvolutionVariations(chain);
+		return Object.keys(result).length > 0 ? result : undefined;
 	}
 
 	static movesFilter(moves) {
-		return PokemonUtils.filterMoves(moves);
+		const result = PokemonUtils.filterMoves(moves);
+		return result.length > 0 ? result : undefined;
 	}
 
 	static filterGender(gender) {
@@ -35,12 +39,17 @@ export class PokemonUtils {
 
 	static filterSprites(sprites) {
 		const { front_default, back_default, front_shiny, back_shiny } = sprites;
-		return {
+		const obj = {
 			front_default: front_default ? front_default : undefined,
 			back_default: back_default ? back_default : undefined,
 			front_shiny: front_shiny ? front_shiny : undefined,
 			back_shiny: back_shiny ? back_shiny : undefined,
 		};
+		for (let i in obj) {
+			if (obj[i] === undefined) delete obj[i];
+		}
+
+		return obj;
 	}
 
 	static filterMoves(moves) {
@@ -340,6 +349,22 @@ export class PokemonUtils {
 		obj['unique_form']?.name === undefined ? delete obj['unique_form'] : null;
 		obj['unique_form']?.gender ? delete obj['unique_form'].gender : null;
 		obj['first_form']?.name === 'Burmy' ? delete obj['first_form'].gender : null;
+
+		return obj;
+	}
+
+	static standardChainObj(arr) {
+		const obj = {
+			baby_trigger_item: null,
+			chain: {
+				evolution_details: null,
+				evolves_to: [],
+				is_baby: null,
+				species: null,
+				url: null,
+			},
+			id: arr[1].id,
+		};
 
 		return obj;
 	}

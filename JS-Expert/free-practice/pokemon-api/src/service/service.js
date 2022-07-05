@@ -1,3 +1,4 @@
+import { PokemonUtils } from '../utils/pokemon.utils.js';
 import { ServiceUtils } from '../utils/service.utils.js';
 import { ErrorMessages } from '../utils/error.messages.js';
 import { PokemonResponseDto } from '../dto/pokemon.response.dto.js';
@@ -24,19 +25,7 @@ export class Service {
 			pokemonData = await ServiceUtils.fetchUrl(arr[0].species.url);
 			arr.push(pokemonData);
 
-			const obj = {
-				baby_trigger_item: null,
-				chain: {
-					evolution_details: null,
-					evolves_to: [],
-					is_baby: null,
-					species: null,
-					url: null,
-				},
-				id: arr[1].id,
-			};
-
-			pokemonData = pokemonData.evolution_chain ? await ServiceUtils.fetchUrl(arr[1].evolution_chain.url) : obj;
+			pokemonData = pokemonData.evolution_chain ? await ServiceUtils.fetchUrl(arr[1].evolution_chain.url) : PokemonUtils.standardChainObj(arr);
 			arr.push(pokemonData);
 
 			return new PokemonResponseDto(arr[0], arr[1], arr[2]);
