@@ -8,5 +8,5 @@ export class ResponseDto {
 		this.sprites = ResponseDtoUtils.spritesFilter(sprites);
 		this.evolution_chain = ResponseDtoUtils.evolutionChainFilter(chain);
 		this.moves = ResponseDtoUtils.movesFilter(moves);
-	}
+	};
 }
