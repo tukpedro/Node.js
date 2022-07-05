@@ -355,13 +355,13 @@ export class ResponseDtoUtils {
 
 	static standardChainObj(arr) {
 		const obj = {
-			baby_trigger_item: null,
+			baby_trigger_item: undefined,
 			chain: {
-				evolution_details: null,
+				evolution_details: undefined,
 				evolves_to: [],
-				is_baby: null,
-				species: null,
-				url: null,
+				is_baby: undefined,
+				species: undefined,
+				url: undefined,
 			},
 			id: arr[1].id,
 		};
