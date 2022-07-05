@@ -28,7 +28,7 @@ After downloading the project you need to install the dependencies. Open the ter
 ```
 yarn
 ```
-
+### Running the App
 After installing the dependencies, just run the project with:
 
 ```
