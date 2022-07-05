@@ -1,7 +1,7 @@
-import { PokemonUtils } from '../utils/pokemon.utils.js';
+import { ResponseDtoUtils } from '../utils/response.dto.utils.js';
 import { ServiceUtils } from '../utils/service.utils.js';
 import { ErrorMessages } from '../utils/error.messages.js';
-import { PokemonResponseDto } from '../dto/pokemon.response.dto.js';
+import { ResponseDto } from '../dto/response.dto.js';
 
 export class Service {
 	static async service(req) {
@@ -25,10 +25,10 @@ export class Service {
 			pokemonData = await ServiceUtils.fetchUrl(arr[0].species.url);
 			arr.push(pokemonData);
 
-			pokemonData = pokemonData.evolution_chain ? await ServiceUtils.fetchUrl(arr[1].evolution_chain.url) : PokemonUtils.standardChainObj(arr);
+			pokemonData = pokemonData.evolution_chain ? await ServiceUtils.fetchUrl(arr[1].evolution_chain.url) : ResponseDtoUtils.standardChainObj(arr);
 			arr.push(pokemonData);
 
-			return new PokemonResponseDto(arr[0], arr[1], arr[2]);
+			return new ResponseDto(arr[0], arr[1], arr[2]);
 		} catch (error) {
 			throw error;
 		}
