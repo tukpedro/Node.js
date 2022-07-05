@@ -338,6 +338,7 @@ export class PokemonUtils {
 	static manualCorrections(obj) {
 		obj.first_form?.name === 'Eevee' ? delete obj.first_form?.item : null;
 		obj['unique_form']?.name === undefined ? delete obj['unique_form'] : null;
+		obj['unique_form']?.gender ? delete obj['unique_form'].gender : null;
 		obj['first_form']?.name === 'Burmy' ? delete obj['first_form'].gender : null;
 
 		return obj;
