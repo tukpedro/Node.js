@@ -23,10 +23,16 @@ You just need to download it and run after the instructions below
 
 ### Installing
 
-After downloading the project, open the terminal an run:
+After downloading the project you need to install the dependencies. Open the terminal an run:
 
 ```
 yarn
+```
+
+After installing the dependencies, just run the project with:
+
+```
+yarn start
 ```
 
 ## Usage <a name = "usage"></a>
