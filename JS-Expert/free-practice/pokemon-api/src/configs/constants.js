@@ -1,4 +1,6 @@
 export class Constants {
+	static port = 3000;
+
 	static cluster0 = {
 		username: 'pedropastuk',
 		password: 'J764Cj',
