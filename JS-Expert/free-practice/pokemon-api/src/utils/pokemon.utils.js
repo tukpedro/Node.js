@@ -294,7 +294,7 @@ export class PokemonUtils {
 		let prop = chain?.evolves_to.length > 0 ? 'first_form' : 'unique_form';
 
 		obj[prop] = {
-			name: chain?.species?.name ? this.formatName(chain?.species?.name) : undefined,
+			name: chain?.species?.name ? this.formatName(chain?.species?.name) : chain?.species?.name,
 			evolution_trigger: chain?.evolves_to[0]?.evolution_details[0]?.trigger?.name,
 			evolution_level: chain?.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.min_level,
 			gender:
@@ -330,16 +330,15 @@ export class PokemonUtils {
 			item: chain?.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.item.name,
 		};
 
-		PokemonUtils.manualCorrections(chain, obj)
+		PokemonUtils.manualCorrections(obj);
 
 		return obj;
 	}
 
-	static manualCorrections(chain, obj) {
-		let prop = chain?.evolves_to.length > 0 ? 'first_form' : 'unique_form';
+	static manualCorrections(obj) {
 		obj.first_form?.name === 'Eevee' ? delete obj.first_form?.item : null;
-		obj[prop].name === undefined ? delete obj[prop] : null;
-		obj[prop].name === 'Burmy' ? delete obj[prop].gender : null;
+		obj['unique_form']?.name === undefined ? delete obj['unique_form'] : null;
+		obj['first_form']?.name === 'Burmy' ? delete obj['first_form'].gender : null;
 
 		return obj;
 	}
