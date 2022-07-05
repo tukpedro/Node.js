@@ -16,7 +16,7 @@ export class PokemonUtils {
 	}
 
 	static evolutionChainFilter(chain) {
-		return chain.evolves_to.length === 1 ? PokemonUtils.getEvolutionsInfo(chain) : PokemonUtils.getEvolutionVariations(chain);
+		return chain?.evolves_to?.length === 1 ? PokemonUtils.getEvolutionsInfo(chain) : PokemonUtils.getEvolutionVariations(chain);
 	}
 
 	static movesFilter(moves) {
@@ -219,65 +219,65 @@ export class PokemonUtils {
 	static getEvolutionVariations(chain) {
 		const obj = PokemonUtils.buildFirstObject(chain);
 
-		const a = chain.evolves_to.length > 1 ? true : false;
+		const a = chain?.evolves_to?.length > 1 ? true : false;
 		if (a) {
-			for (let i in chain.evolves_to) {
+			for (let i in chain?.evolves_to) {
 				obj[`final_form_${parseInt(i) + 1}`] = {
-					name: PokemonUtils.formatName(chain.evolves_to[i]?.species?.name),
-					evolution_trigger: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.trigger?.name),
+					name: PokemonUtils.formatName(chain?.evolves_to[i]?.species?.name),
+					evolution_trigger: PokemonUtils.formatName(chain?.evolves_to[i]?.evolution_details[0]?.trigger?.name),
 					evolution_level:
-						chain.evolves_to[i]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.min_level,
+						chain?.evolves_to[i]?.evolution_details[0]?.min_level === null ? undefined : chain?.evolves_to[i]?.evolution_details[0]?.min_level,
 					gender:
-						chain.evolves_to[i]?.evolution_details[0]?.gender === null
+						chain?.evolves_to[i]?.evolution_details[0]?.gender === null
 							? undefined
-							: PokemonUtils.filterGender(chain.evolves_to[i]?.evolution_details[0]?.gender),
-					held_item: chain.evolves_to[i]?.evolution_details[0]?.held_item === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.held_item,
+							: PokemonUtils.filterGender(chain?.evolves_to[i]?.evolution_details[0]?.gender),
+					held_item: chain?.evolves_to[i]?.evolution_details[0]?.held_item === null ? undefined : chain?.evolves_to[i]?.evolution_details[0]?.held_item,
 					known_move:
-						chain.evolves_to[i]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.known_move,
+						chain?.evolves_to[i]?.evolution_details[0]?.known_move === null ? undefined : chain?.evolves_to[i]?.evolution_details[0]?.known_move,
 					known_move_type:
-						chain.evolves_to[i]?.evolution_details[0]?.known_move_type === null
+						chain?.evolves_to[i]?.evolution_details[0]?.known_move_type === null
 							? undefined
-							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.known_move_type.name),
+							: PokemonUtils.formatName(chain?.evolves_to[i]?.evolution_details[0]?.known_move_type.name),
 					location:
-						chain.evolves_to[i]?.evolution_details[0]?.location === null
+						chain?.evolves_to[i]?.evolution_details[0]?.location === null
 							? undefined
-							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.location.name),
+							: PokemonUtils.formatName(chain?.evolves_to[i]?.evolution_details[0]?.location.name),
 					min_affection:
-						chain.evolves_to[i]?.evolution_details[0]?.min_affection === null
+						chain?.evolves_to[i]?.evolution_details[0]?.min_affection === null
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.min_affection,
+							: chain?.evolves_to[i]?.evolution_details[0]?.min_affection,
 					min_beauty:
-						chain.evolves_to[i]?.evolution_details[0]?.min_beauty === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.min_beauty,
+						chain?.evolves_to[i]?.evolution_details[0]?.min_beauty === null ? undefined : chain?.evolves_to[i]?.evolution_details[0]?.min_beauty,
 					min_happiness:
-						chain.evolves_to[i]?.evolution_details[0]?.min_happiness === null
+						chain?.evolves_to[i]?.evolution_details[0]?.min_happiness === null
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.min_happiness,
+							: chain?.evolves_to[i]?.evolution_details[0]?.min_happiness,
 					needs_overworld_rain:
-						chain.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain === false
+						chain?.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain === false
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain,
+							: chain?.evolves_to[i]?.evolution_details[0]?.needs_overworld_rain,
 					party_species:
-						chain.evolves_to[i]?.evolution_details[0]?.party_species === null
+						chain?.evolves_to[i]?.evolution_details[0]?.party_species === null
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.party_species,
+							: chain?.evolves_to[i]?.evolution_details[0]?.party_species,
 					party_type:
-						chain.evolves_to[i]?.evolution_details[0]?.party_type === null ? undefined : chain.evolves_to[i]?.evolution_details[0]?.party_type,
+						chain?.evolves_to[i]?.evolution_details[0]?.party_type === null ? undefined : chain?.evolves_to[i]?.evolution_details[0]?.party_type,
 					relative_physical_stats:
-						chain.evolves_to[i]?.evolution_details[0]?.relative_physical_stats === null
+						chain?.evolves_to[i]?.evolution_details[0]?.relative_physical_stats === null
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.relative_physical_stats,
+							: chain?.evolves_to[i]?.evolution_details[0]?.relative_physical_stats,
 					time_of_day:
-						chain.evolves_to[i]?.evolution_details[0]?.time_of_day === ''
+						chain?.evolves_to[i]?.evolution_details[0]?.time_of_day === ''
 							? undefined
-							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.time_of_day),
+							: PokemonUtils.formatName(chain?.evolves_to[i]?.evolution_details[0]?.time_of_day),
 					trade_species:
-						chain.evolves_to[i]?.evolution_details[0]?.trade_species === null
+						chain?.evolves_to[i]?.evolution_details[0]?.trade_species === null
 							? undefined
-							: chain.evolves_to[i]?.evolution_details[0]?.trade_species,
+							: chain?.evolves_to[i]?.evolution_details[0]?.trade_species,
 					item:
-						chain.evolves_to[i]?.evolution_details[0]?.item === null
+						chain?.evolves_to[i]?.evolution_details[0]?.item === null
 							? undefined
-							: PokemonUtils.formatName(chain.evolves_to[i]?.evolution_details[0]?.item.name),
+							: PokemonUtils.formatName(chain?.evolves_to[i]?.evolution_details[0]?.item.name),
 				};
 
 				obj[`final_form_${parseInt(i) + 1}`].name === 'Hitmonlee' || 'Hitmonchan' || 'Hitmontop'
@@ -290,43 +290,44 @@ export class PokemonUtils {
 
 	static buildFirstObject(chain) {
 		const obj = {};
-		let prop = chain.evolves_to.length > 0 ? 'first_form' : 'unique_form';
+		let prop = chain?.evolves_to.length > 0 ? 'first_form' : 'unique_form';
 		
 		obj[prop] = {
-			name: this.formatName(chain.species?.name),
-			evolution_trigger: chain.evolves_to[0]?.evolution_details[0]?.trigger?.name,
-			evolution_level: chain.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_level,
-			// gender: chain.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : PokemonUtils.filterGender(chain.evolves_to[0]?.evolution_details[0]?.gender),
-			held_item: chain.evolves_to[0]?.evolution_details[0]?.held_item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.held_item.name,
-			known_move: chain.evolves_to[0]?.evolution_details[0]?.known_move === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.known_move,
+			name: chain?.species?.name ? this.formatName(chain?.species?.name) : undefined,
+			evolution_trigger: chain?.evolves_to[0]?.evolution_details[0]?.trigger?.name,
+			evolution_level: chain?.evolves_to[0]?.evolution_details[0]?.min_level === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.min_level,
+			// gender: chain?.evolves_to[0]?.evolution_details[0]?.gender === null ? undefined : PokemonUtils.filterGender(chain?.evolves_to[0]?.evolution_details[0]?.gender),
+			held_item: chain?.evolves_to[0]?.evolution_details[0]?.held_item === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.held_item.name,
+			known_move: chain?.evolves_to[0]?.evolution_details[0]?.known_move === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.known_move,
 			known_move_type:
-				chain.evolves_to[0]?.evolution_details[0]?.known_move_type === null
+				chain?.evolves_to[0]?.evolution_details[0]?.known_move_type === null
 					? undefined
-					: chain.evolves_to[0]?.evolution_details[0]?.known_move_type.name,
-			location: chain.evolves_to[0]?.evolution_details[0]?.location === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.location.name,
+					: chain?.evolves_to[0]?.evolution_details[0]?.known_move_type.name,
+			location: chain?.evolves_to[0]?.evolution_details[0]?.location === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.location.name,
 			min_affection:
-				chain.evolves_to[0]?.evolution_details[0]?.min_affection === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_affection,
-			min_beauty: chain.evolves_to[0]?.evolution_details[0]?.min_beauty === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_beauty,
+				chain?.evolves_to[0]?.evolution_details[0]?.min_affection === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.min_affection,
+			min_beauty: chain?.evolves_to[0]?.evolution_details[0]?.min_beauty === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.min_beauty,
 			min_happiness:
-				chain.evolves_to[0]?.evolution_details[0]?.min_happiness === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.min_happiness,
+				chain?.evolves_to[0]?.evolution_details[0]?.min_happiness === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.min_happiness,
 			needs_overworld_rain:
-				chain.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain === false
+				chain?.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain === false
 					? undefined
-					: chain.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain,
+					: chain?.evolves_to[0]?.evolution_details[0]?.needs_overworld_rain,
 			party_species:
-				chain.evolves_to[0]?.evolution_details[0]?.party_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.party_species,
-			party_type: chain.evolves_to[0]?.evolution_details[0]?.party_type === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.party_type,
+				chain?.evolves_to[0]?.evolution_details[0]?.party_species === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.party_species,
+			party_type: chain?.evolves_to[0]?.evolution_details[0]?.party_type === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.party_type,
 			relative_physical_stats:
-				chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats === null
+				chain?.evolves_to[0]?.evolution_details[0]?.relative_physical_stats === null
 					? undefined
-					: chain.evolves_to[0]?.evolution_details[0]?.relative_physical_stats,
-			time_of_day: chain.evolves_to[0]?.evolution_details[0]?.time_of_day === '' ? undefined : chain.evolves_to[0]?.evolution_details[0]?.time_of_day,
+					: chain?.evolves_to[0]?.evolution_details[0]?.relative_physical_stats,
+			time_of_day: chain?.evolves_to[0]?.evolution_details[0]?.time_of_day === '' ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.time_of_day,
 			trade_species:
-				chain.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.trade_species,
-			item: chain.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain.evolves_to[0]?.evolution_details[0]?.item.name,
+				chain?.evolves_to[0]?.evolution_details[0]?.trade_species === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.trade_species,
+			item: chain?.evolves_to[0]?.evolution_details[0]?.item === null ? undefined : chain?.evolves_to[0]?.evolution_details[0]?.item.name,
 		};
 
 		obj.first_form?.name === 'Eevee' ? delete obj.first_form?.item : null;
+		obj[prop].name === undefined ? delete obj[prop] : null;	
 
 		return obj;
 	}
