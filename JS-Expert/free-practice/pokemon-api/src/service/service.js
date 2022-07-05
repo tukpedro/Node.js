@@ -10,7 +10,6 @@ export class Service {
 		try {
 			let found;
 			let { results } = await ServiceUtils.fetchUrl(data.pokemonsUrl);
-
 			if (isNaN(data.pokemon)) {
 				found = results.find((e) => e.name === data.pokemon);
 				if (!found) throw ErrorMessages.pokemonNotFound;
